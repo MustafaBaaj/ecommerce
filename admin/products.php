@@ -5,9 +5,18 @@ include 'includes/navigation.php';
 if(isset($_GET['add']) || isset($_Get['edit'])){
 $brandQuery = $db->query("SELECT * FROM brand ORDER BY brand");
 $parentQuery = $db->query("SELECT * FROM categories WHERE parent = 0 ORDER BY category");
+$title = ((isset($_POST['title']) && $_POST['title'] != '')?sanitize($_POST['title']):'');
+$brand = ((isset($_POST['brand']) && !empty($_POST['brand']))?sanitize($_POST['brand']): '');
+
+    if(isset($_GET['edit'])){
+        $edit_id = (int)$_GET['edit'];
+        $productresults = $db->query("SELECT * FROM products WHERE id= '$edit_id'");
+        $product = mysqli_fetch_assoc($productresults);
+        $title = ((isset($_POST['title']) && !empty($_POST['title']))?sanitize($_POST['title']):$product['title']);
+        $brand = ((isset($_POST['brand']) && !empty($_POST['title']))?sanitize($_POST['brand']):$product['brand']);
+
+    }
 if(isset($_POST['submit'])){
-    $title = sanitize($_POST['title']);
-    $brand = sanitize($_POST['brand']);
     $categories = sanitize($_POST['child']);
     $price = sanitize($_POST['price']);
     $list_price = sanitize($_POST['list_price']);
@@ -83,17 +92,17 @@ if(isset($_POST['submit'])){
 
 ?>
 <h2 class="text-center"><?=((isset($_GET['edit']))?'Edit':'Add A new'); ?> products</h2><hr />
-<form action="products.php?add=1" method="POST" enctype="multipart/form-data">
+<form action="products.php?<?=((isset($_get['edit']))?'edit='.$edit_id:'add=1');?>" method="POST" enctype="multipart/form-data">
     <div class="form-group col-md-3">
         <label for="title">Title*:</label>
-        <input type="text" name="title" class="form-control" id="title" value="<?=((isset($_POST['title']))?sanitize($_POST['title']):'');?>" />
+        <input type="text" name="title" class="form-control" id="title" value="<?=$title?>" />
     </div>
     <div class="form-group col-md-3">
         <label for="brand">Brand*:</label>
         <select class="form-control" id="brand" name="brand">
-            <option value=""<?=((isset($_POST['brand']) && $_POST['brand'] == '``')?'selected':''); ?>></option>
-                    <?php while($brand= mysqli_fetch_assoc($brandQuery)): ?>
-            <option value="<?=$brand['id'];?>"<?=((isset($_POST['brand']) && $_POST['brand'] == $brand['id'])?'selected':'');?>><?= $brand['brand']; ?></option>
+            <option value=""<?=(($brand == '``')?'selected':''); ?>></option>
+                    <?php while($b= mysqli_fetch_assoc($brandQuery)): ?>
+            <option value="<?=$brand['id'];?>"<?=(($brand == $b['id'])?'selected':'');?>><?= $brand['brand']; ?></option>
                     <?php endwhile; ?>
         </select>
     </div>
