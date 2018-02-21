@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-        <a href="/tutorial/admin/index.php" class="navbar-brand">Shaunta's Boutique Admina</a>
+        <a href="/ecommerce/admin/index.php" class="navbar-brand">Shaunta's Boutique Admina</a>
         <ul class="nav navbar-nav">
 
             <!-- Menu ITeam -->

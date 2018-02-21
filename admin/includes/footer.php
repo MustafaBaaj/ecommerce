@@ -14,7 +14,7 @@ function updatesizes(){
 function get_child_options(){
     var parentID = jQuery('#parent').val();
     jQuery.ajax({
-        url: '/tutorial/admin/parsers/child_categories.php',
+        url: '/ecommerce/admin/parsers/child_categories.php',
         type: 'POST',
         data: {parentID : parentID},
         success: function(data){

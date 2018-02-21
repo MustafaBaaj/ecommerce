@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'].'/tutorial/core/init.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/core/init.php';
 include 'includes/head.php';
 include 'includes/navigation.php';
 if(isset($_GET['add']) || isset($_Get['edit'])){
@@ -51,7 +51,7 @@ if(isset($_POST['submit'])){
         $allowed = array('png','jpg','jpeg','gif');
         $uploadname = md5(microtime()).'.'.$fileext;
         $uploadpath = BASEURL.'images/products/'.$uploadname;
-        $dbpath = 'tutorial/images/products/'.$uploadname;
+        $dbpath = 'ecommerce/images/products/'.$uploadname;
         if($mimetype != 'image'){
             $errors[] = 'the file must be and image';
         }
